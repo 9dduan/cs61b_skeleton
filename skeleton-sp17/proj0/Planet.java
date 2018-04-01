@@ -7,23 +7,41 @@ public class Planet {
 	public double mass;
 	public String imgFileName;
 
-	public double calcForceExcertedByX(Planet p){
+	public double calcDistance(Planet p){
 		double xDist = p.xxPos - this.xxPos;
 		double yDist = p.yyPos - this.yyPos;
 		double Dist = Math.sqrt(xDist*xDist + yDist*yDist);
-		double G = 6.67*10e-11;
-		double F = G*this.mass*p.mass/(Dist*Dist);
-		double Fx = F*xDist/Dist;
-		return Fx;
+		return Dist;
+		}
+
+	public double calcForceExcertedByX(Planet[] allPlanets){
+	        int i; 
+		double xDist;
+                double sum = 0.0;	
+		double G=6.67*10e-11; 
+		double F;
+		double Fx; 
+		for(i = 0;i<allPlanets.length;i++){
+			F = G*this.mass*allPlanets[i].mass/this.calcDistance(allPlanets[i]);
+			Fx = F*(allPlanets[i].xxPos - this.xxPos)/this.calcDistance(allPlanets[i]);
+			sum = sum + Fx;
+		};
+		return sum;	
 	}
-	        public double calcForceExcertedByY(Planet p){
-			double xDist = p.xxPos - this.xxPos;
-			double yDist = p.yyPos - this.yyPos;
-			double Dist = Math.sqrt(xDist*xDist + yDist*yDist);
+	        public double calcForceExcertedByY(Planet[] allPlanets){
+			
+		 	int i;	
+		        
 			double G = 6.67*10e-11;
-			double F = G*this.mass*p.mass/(Dist*Dist);
-			double Fy = F*yDist/Dist;
-			return Fy;
+			double F ;
+			double Fy;
+		 	double sum = 0.0;
+			for(i=0;i<allPlanets.length;i++){
+				F = G*this.mass*allPlanets[i].mass/this.calcDistance(allPlanets[i]);
+				Fy = F*(allPlanets[i].yyPos - this.yyPos)/this.calcDistance(allPlanets[i]);
+				sum = sum + Fy;
+			}
+			return sum;
 		}
 
 
